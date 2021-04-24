@@ -74,3 +74,4 @@ remote func queue_button_unlock():
 		rpc_id(players[players_queue[queue]],"unlock_button")
 		queue = 1
 		pass
+		#test
