@@ -15,6 +15,8 @@ func _on_Join_pressed():#Функция, срабатывает при нажа�
 	Server.ConnectToServer($Connect/Name.text)#Попытка присоедениться к серверу
 	
 	$Connect.hide()
+	$Enviroment/Wires_2.hide()
+	$Enviroment/Wires_4.show()
 	$Players.show()
 
 func refresh_lobby(player_list):
