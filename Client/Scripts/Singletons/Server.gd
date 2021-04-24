@@ -54,22 +54,19 @@ remote func all_ready():
 	get_tree().get_root().get_node("Lobby").hide()
 
 func get_players_names():
-	rpc_id(0,"get_players_names",get_tree().get_network_unique_id())
+	rpc_id(1,"get_players_names",get_tree().get_network_unique_id())
 
 remote func return_players_names(player_list):
 	emit_signal("players_name", player_list)
 
 func roll_dice():
-	rpc_id(0,"roll_dice",get_tree().get_network_unique_id())
+	rpc_id(1,"roll_dice",get_tree().get_network_unique_id())
 
 remote func rolled(roll,player):
 	emit_signal("rolled", roll, player)
 
-func queue():
-	rpc_id(0,"queue",get_tree().get_network_unique_id())
-
 func queue_button_unlock():
-	rpc_id(0,"queue_button_unlock")
+	rpc_id(1,"queue_button_unlock")
 
 remote func unlock_button():
-	emit_signal("queue")
+		emit_signal("queue")
