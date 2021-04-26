@@ -4,6 +4,8 @@ signal player_list_changed()
 signal players_name()
 signal rolled()
 signal queue()
+signal Player_move()
+signal message()
 
 var network = NetworkedMultiplayerENet.new()#Создание пира
 var port = 10567#Дефолтный порт
@@ -65,8 +67,14 @@ func roll_dice():
 remote func rolled(roll,player):
 	emit_signal("rolled", roll, player)
 
-func queue_button_unlock():
-	rpc_id(1,"queue_button_unlock")
-
 remote func unlock_button():
 		emit_signal("queue")
+
+remote func Player_move(Player,position):
+	emit_signal("Player_move",Player,position)
+
+func chat(text):
+	rpc_id(1,"message",text,get_tree().get_network_unique_id())
+
+remote func message(text,name,color):
+	emit_signal("message",text,name,color)
