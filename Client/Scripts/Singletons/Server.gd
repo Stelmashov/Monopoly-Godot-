@@ -6,12 +6,15 @@ signal rolled()
 signal queue()
 signal Player_move()
 signal message()
+signal buyPanelShow()
+signal cellColorChange()
 
 var network = NetworkedMultiplayerENet.new()#Создание пира
 var port = 10567#Дефолтный порт
 #var ip = "127.0.0.1"#Дефолтный ип
 var ip = "192.168.0.124"
 
+var PlayerQueue
 var player_name = ""#Дефолтное имя игрока
 var players = {}
 
@@ -72,9 +75,22 @@ remote func unlock_button():
 
 remote func Player_move(Player,position):
 	emit_signal("Player_move",Player,position)
+	
+remote func showBuyPanel():
+	emit_signal("buyPanelShow",1)
 
 func chat(text):
 	rpc_id(1,"message",text,get_tree().get_network_unique_id())
 
 remote func message(text,name,color):
 	emit_signal("message",text,name,color)
+
+remote func playerQueue(p):
+	PlayerQueue = p
+
+func buy_click():
+	rpc_id(1,"playerBuyPressed", PlayerQueue)
+	emit_signal("buyPanelShow",0)
+
+remote func colorChange(player,cell):
+	emit_signal("cellColorChange",player,cell)
