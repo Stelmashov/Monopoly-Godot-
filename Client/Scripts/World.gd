@@ -6,6 +6,7 @@ func _ready():
 	Server.connect("Player_move",self,"Player_move")
 	Server.connect("buyPanelShow",self,"buyPanel")
 	Server.connect("cellColorChange",self,"cellColorChange")
+	Server.connect("budgetFix",self,"budgetFix")
 
 	Server.get_players_names()
 
@@ -67,11 +68,11 @@ func buyPanel(state):
 		$BuyPanel.show()
 	elif state == 0:
 		$BuyPanel.hide()
+	elif state == 3:
+		$BuyPanel/Panel/Buy.modulate = Color.red#Perepist' pozze
 
 func cellColorChange(player,cell):
 	var string = NodePath("Panel/Deck/c" + str(cell) + "/color")
-	print(string)
-	#print("$Panel/Deck/" + str(cell) + "/color")
 	if player == 1:
 		get_node(string).modulate = Color.red
 	elif player == 2:
@@ -80,3 +81,9 @@ func cellColorChange(player,cell):
 		get_node(string).modulate = Color.blue
 	elif player == 4:
 		get_node(string).modulate = Color.yellow
+
+func budgetFix(budget,player):
+	print("popal v signal")
+	var string = NodePath("Panel/Players_Bar/Budjet"+str(player))
+	print(get_node(string))
+	get_node(string).text = str(budget)

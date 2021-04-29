@@ -31,6 +31,41 @@ var player4_info = {
 }
 var colors = {}
 
+var cellPrice = {
+	2: 1000,
+	3: 1000,
+	4: 1000,
+	5: 1000,
+	6: 1000,
+	7: 1000,
+	8: 1000,
+	9: 1000,
+	11: 1000,
+	12: 1000,
+	13: 1000,
+	14: 1000,
+	15: 1000,
+	16: 1000,
+	17: 1000,
+	18: 1000,
+	20: 1000,
+	21: 1000,
+	22: 1000,
+	23: 1000,
+	24: 1000,
+	25: 1000,
+	26: 1000,
+	27: 1000,
+	29: 1000,
+	30: 1000,
+	31: 1000,
+	32: 1000,
+	33: 1000,
+	34: 1000,
+	35: 1000,
+	36: 1000,
+}
+
 var cellOwner = {
 	1: 0,
 	2: 0,
@@ -158,20 +193,20 @@ remote func player_ready(player_id):#Функция для принимания 
 		mas.sort()
 		for p in players.size():
 			mas2[p+1] = players_queue[mas[p]]#Составления очереди ходов для игроков
-			colors[players_queue[mas[p]]] = p + 1
+			colors[players_queue[mas[p]]] = p + 1#Nahuya eto?
 		players_queue = mas2.duplicate()
 		for p in players.size():
 			rpc_id(players_queue[p+1],"playerQueue",p+1)
 		queue_button_unlock()
 
 remote func get_players_names(player_id):#Функция для возврата имен всех игроков
-	rpc_id(0,"return_players_names",players.values())
+		rpc_id(player_id,"return_players_names",players.values())
 
 remote func roll_dice(player_id):#Функция для рандомизации броска костей
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	roll1 = rng.randi_range(1,6)
-	roll1 = rng.randi_range(1,6)
+	roll2 = rng.randi_range(1,6)
 	rpc_id(0,"rolled",roll1+roll2,players[player_id])
 	Player_move()
 	queue += 1
@@ -216,59 +251,82 @@ func Player_move():
 		else:
 			player1_info["curentCell"] = player1_info["curentCell"] + (roll1+roll2)
 		rpc_id(0,"Player_move",1,cellPosition[player1_info["curentCell"]])
-		if player1_info["curentCell"] != 1 or player1_info["curentCell"] != 10 or player1_info["curentCell"] != 19 or player1_info["curentCell"] != 28:
+		if player1_info["curentCell"] + (roll1+roll2) != 1 || player1_info["curentCell"] + (roll1+roll2) != 10 || player1_info["curentCell"] + (roll1+roll2) != 19 || player1_info["curentCell"] + (roll1+roll2) != 28:
 			if cellOwner[player1_info["curentCell"]] == 0:
-				rpc_id(players_queue[queue],"showBuyPanel")
+				rpc_id(players_queue[queue],"showBuyPanel",1)
 			else:
-				pass#popal na babki
+				rpc_id(0,"budgetFix",(player1_info["budget"]-cellPrice[player1_info["curentCell"]]),1)
 	elif queue == 2:
 		if player2_info["curentCell"] + (roll1+roll2) > 36:
 			player2_info["curentCell"] = (player2_info["curentCell"] + (roll1+roll2)) - 36
 		else:
 			player2_info["curentCell"] = player2_info["curentCell"] + (roll1+roll2)
 		rpc_id(0,"Player_move",2,cellPosition[player2_info["curentCell"]])
-		if player2_info["curentCell"] != 1 or player2_info["curentCell"] != 10 or player2_info["curentCell"] != 19 or player2_info["curentCell"] != 28:
+		if player2_info["curentCell"] + (roll1+roll2) != 1 || player2_info["curentCell"] + (roll1+roll2) != 10 || player2_info["curentCell"] + (roll1+roll2) != 19 || player2_info["curentCell"] + (roll1+roll2) != 28:
 			if cellOwner[player2_info["curentCell"]] == 0:
-				rpc_id(players_queue[queue],"showBuyPanel")
+				rpc_id(players_queue[queue],"showBuyPanel",1)
 			else:
-				pass#popal na babki
+				rpc_id(0,"budgetFix",(player2_info["budget"]-cellPrice[player2_info["curentCell"]]),2)
 	elif queue == 3:
 		if player3_info["curentCell"] + (roll1+roll2) > 36:
 			player3_info["curentCell"] = (player3_info["curentCell"] + (roll1+roll2)) - 36
 		else:
 			player3_info["curentCell"] = player3_info["curentCell"] + (roll1+roll2)
 		rpc_id(0,"Player_move",3,cellPosition[player3_info["curentCell"]])
-		if player3_info["curentCell"] != 1 or player3_info["curentCell"] != 10 or player3_info["curentCell"] != 19 or player3_info["curentCell"] != 28:
+		if player3_info["curentCell"] + (roll1+roll2) != 1 || player3_info["curentCell"] + (roll1+roll2) != 10 || player3_info["curentCell"] + (roll1+roll2) != 19 || player3_info["curentCell"] + (roll1+roll2) != 28:
 			if cellOwner[player3_info["curentCell"]] == 0:
-				rpc_id(players_queue[queue],"showBuyPanel")
+				rpc_id(players_queue[queue],"showBuyPanel",1)
 			else:
-				pass#popal na babki
+				rpc_id(0,"budgetFix",(player3_info["budget"]-cellPrice[player3_info["curentCell"]]),3)
 	elif queue == 4:
 		if player4_info["curentCell"] + (roll1+roll2) > 36:
 			player4_info["curentCell"] = (player4_info["curentCell"] + (roll1+roll2)) - 36
 		else:
 			player4_info["curentCell"] = player4_info["curentCell"] + (roll1+roll2)
 		rpc_id(0,"Player_move",4,cellPosition[player4_info["curentCell"]])
-		if player4_info["curentCell"] != 1 or player4_info["curentCell"] != 10 or player4_info["curentCell"] != 19 or player4_info["curentCell"] != 28:
+		if player4_info["curentCell"] + (roll1+roll2) != 1 || player4_info["curentCell"] + (roll1+roll2) != 10 || player4_info["curentCell"] + (roll1+roll2) != 19 || player4_info["curentCell"] + (roll1+roll2) != 28:
 			if cellOwner[player4_info["curentCell"]] == 0:
-				rpc_id(players_queue[queue],"showBuyPanel")
+				rpc_id(players_queue[queue],"showBuyPanel",1)
 			else:
-				pass#popal na babki
+				rpc_id(0,"budgetFix",(player4_info["budget"]-cellPrice[player4_info["curentCell"]]),4)
 
 remote func message(text,player_id):
 	rpc_id(0,"message",text,players[player_id],colors[player_id])
 
 remote func playerBuyPressed(Player):
 	if Player == 1:
-		cellOwner[player1_info["curentCell"]] = Player
-		rpc_id(0,"colorChange", Player,player1_info["curentCell"])
+		if player1_info["budget"] - cellPrice[player1_info["curentCell"]] > 0:
+			cellOwner[player1_info["curentCell"]] = Player
+			rpc_id(0,"colorChange", Player,player1_info["curentCell"])
+			player1_info["budget"] = player1_info["budget"] - cellPrice[player1_info["curentCell"]]
+			rpc_id(0,"budgetFix",player1_info["budget"],Player)
+			rpc_id(players_queue[Player],"showBuyPanel",0)
+		else:
+			rpc_id(players_queue[Player],"showBuyPanel",3)
 	elif Player == 2:
-		cellOwner[player2_info["curentCell"]] = Player
-		rpc_id(0,"colorChange", Player,player2_info["curentCell"])
+		if player2_info["budget"] - cellPrice[player2_info["curentCell"]] > 0:
+			cellOwner[player2_info["curentCell"]] = Player
+			rpc_id(0,"colorChange", Player,player2_info["curentCell"])
+			player2_info["budget"] = player2_info["budget"] - cellPrice[player2_info["curentCell"]]
+			rpc_id(0,"budgetFix",player2_info["budget"],Player)
+			rpc_id(players_queue[Player],"showBuyPanel",0)
+		else:
+			rpc_id(players_queue[Player],"showBuyPanel",3)
 	elif Player == 3:
-		cellOwner[player3_info["curentCell"]] = Player
-		rpc_id(0,"colorChange", Player,player3_info["curentCell"])
+		if player3_info["budget"] - cellPrice[player3_info["curentCell"]] > 0:
+			cellOwner[player3_info["curentCell"]] = Player
+			rpc_id(0,"colorChange", Player,player3_info["curentCell"])
+			player3_info["budget"] = player3_info["budget"] - cellPrice[player3_info["curentCell"]]
+			rpc_id(0,"budgetFix",player3_info["budget"],Player)
+			rpc_id(players_queue[Player],"showBuyPanel",0)
+		else:
+			rpc_id(players_queue[Player],"showBuyPanel",3)
 	elif Player == 4:
-		cellOwner[player4_info["curentCell"]] = Player
-		rpc_id(0,"colorChange", Player,player4_info["curentCell"])
-	
+		if player4_info["budget"] - cellPrice[player4_info["curentCell"]] > 0:
+			cellOwner[player4_info["curentCell"]] = Player
+			rpc_id(0,"colorChange", Player,player4_info["curentCell"])
+			player4_info["budget"] = player4_info["budget"] - cellPrice[player4_info["curentCell"]]
+			rpc_id(0,"budgetFix",player4_info["budget"],Player)
+			rpc_id(players_queue[Player],"showBuyPanel",0)
+		else:
+			rpc_id(players_queue[Player],"showBuyPanel",3)
