@@ -1,0 +1,61 @@
+[gd_scene format=2]
+
+[node name="Deposit_bar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 279.0
+margin_bottom = 644.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="Panel"]
+margin_left = 15.0
+margin_top = 24.0
+margin_right = 262.0
+margin_bottom = 440.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_top = 445.0
+margin_right = 277.0
+margin_bottom = 492.0
+align = 1
+valign = 1
+
+[node name="deposit" type="Button" parent="Panel"]
+margin_left = 70.9816
+margin_top = 498.007
+margin_right = 202.982
+margin_bottom = 544.007
+text = "deposit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UNdeposit" type="Button" parent="Panel"]
+margin_left = 68.8603
+margin_top = 554.576
+margin_right = 200.86
+margin_bottom = 600.576
+text = "UNdeposit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="deposit_exit" type="Button" parent="Panel"]
+margin_left = 254.778
+margin_top = 4.76221
+margin_right = 274.778
+margin_bottom = 24.7622
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}

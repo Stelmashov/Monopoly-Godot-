@@ -1,0 +1,78 @@
+[gd_scene format=2]
+
+[node name="Casino" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.840942
+margin_top = -1.37064
+margin_right = 0.840942
+margin_bottom = -1.37067
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = -0.8909
+margin_right = 424.109
+margin_bottom = 376.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="Panel"]
+margin_left = 402.832
+margin_top = 5.40825
+margin_right = 421.832
+margin_bottom = 25.4082
+text = "x"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spin" type="Button" parent="Panel"]
+margin_left = 42.8857
+margin_top = 33.6358
+margin_right = 174.886
+margin_bottom = 81.6358
+text = "Spin(3000$)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cansel_But" type="Button" parent="Panel"]
+margin_left = 244.701
+margin_top = 36.1585
+margin_right = 376.701
+margin_bottom = 84.1585
+text = "Cansel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 145.108
+margin_top = 144.634
+margin_right = 193.108
+margin_bottom = 187.634
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Panel"]
+margin_left = 230.039
+margin_top = 144.634
+margin_right = 278.039
+margin_bottom = 187.634
+align = 1
+valign = 1
+
+[node name="Label3" type="Label" parent="Panel"]
+margin_left = 145.216
+margin_top = 263.706
+margin_right = 284.216
+margin_bottom = 313.706
+text = "Try your luck!"
+align = 1
+valign = 1

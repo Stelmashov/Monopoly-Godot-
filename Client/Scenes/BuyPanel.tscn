@@ -54,8 +54,9 @@ margin_top = 52.4408
 margin_right = 468.807
 margin_bottom = 83.4408
 custom_fonts/font = ExtResource( 2 )
-text = "AUCTION"
+text = "CANSEL"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="Panel/Buy" to="." method="_on_Buy_pressed"]
+[connection signal="pressed" from="Panel/Auction" to="." method="_on_Auction_pressed"]

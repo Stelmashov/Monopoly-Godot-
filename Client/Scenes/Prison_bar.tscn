@@ -1,0 +1,44 @@
+[gd_scene format=2]
+
+[node name="Prison_bar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.607422
+margin_right = 0.607422
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 570.0
+margin_bottom = 142.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_right = 570.0
+margin_bottom = 59.0
+text = "Do you want to throw away the doublet or buy off?"
+align = 1
+valign = 1
+
+[node name="doublet" type="Button" parent="Panel"]
+margin_left = 44.5449
+margin_top = 70.381
+margin_right = 169.545
+margin_bottom = 116.381
+text = "doublet"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buy off" type="Button" parent="Panel"]
+margin_left = 375.218
+margin_top = 70.381
+margin_right = 500.218
+margin_bottom = 116.381
+text = "buy off"
+__meta__ = {
+"_edit_use_anchors_": false
+}

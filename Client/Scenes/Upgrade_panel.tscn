@@ -1,0 +1,55 @@
+[gd_scene format=2]
+
+[node name="Upgrade_panel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 221.0
+margin_bottom = 513.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="Panel"]
+margin_left = 13.0
+margin_top = 27.0
+margin_right = 206.0
+margin_bottom = 381.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Upgrade" type="Button" parent="Panel"]
+margin_left = 49.4441
+margin_top = 454.0
+margin_right = 165.444
+margin_bottom = 498.0
+text = "Upgrade"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 39.6427
+margin_top = 383.88
+margin_right = 177.643
+margin_bottom = 426.88
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit" type="Button" parent="Panel"]
+margin_left = 201.0
+margin_top = 3.0
+margin_right = 221.0
+margin_bottom = 23.0
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}

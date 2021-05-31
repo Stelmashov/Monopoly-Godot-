@@ -1,0 +1,38 @@
+[gd_scene format=2]
+
+[node name="SwapAccept" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 563.0
+margin_bottom = 136.0
+
+[node name="Label" type="Label" parent="Panel"]
+margin_right = 559.0
+margin_bottom = 52.0
+align = 1
+valign = 1
+
+[node name="Accept" type="Button" parent="Panel"]
+margin_left = 59.397
+margin_top = 62.2254
+margin_right = 184.397
+margin_bottom = 115.225
+text = "Accept"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B_Cansel" type="Button" parent="Panel"]
+margin_left = 373.352
+margin_top = 65.0538
+margin_right = 498.352
+margin_bottom = 118.054
+text = "cansel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
