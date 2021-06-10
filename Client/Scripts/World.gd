@@ -19,10 +19,10 @@ func _ready():
 	Server.connect("ItemReturn",self,"ItemReturn")
 	
 	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
-	$Panel/callUp.disabled = true
+	$button_panel/CallUp.disabled = true
 	$Deposit_bar/Panel/deposit.disabled = true
 	$Deposit_bar/Panel/UNdeposit.disabled = true
-	$Panel/callDep.disabled = true
+	$button_panel/CallDep.disabled = true
 	
 	Server.get_players_names()
 
@@ -79,22 +79,33 @@ func _process(delta):
 		#Server.chat(" fell asleep while playing")#Фиксить можно только через новый метод
 	elif int(Server.timer) > 0:
 		Server.timer = Server.timer - delta
-		$Timer.value = int(Server.timer)
-		$Time.set_text(str(int(Server.timer)))
+		$Panel/Players_Bar/Timer.value = int(Server.timer)
+		$Panel/Players_Bar/Time.set_text(str(int(Server.timer)))
 
 func _on_Roll_pressed():
-	$Panel/Roll.disabled = true
+	$button_panel/Roll.disabled = true
 	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
-	$Panel/callUp.disabled = true
+	$button_panel/CallDep.disabled = true
+	$button_panel/CallUp.disabled = true
 	$Deposit_bar/Panel/deposit.disabled = true
 	$Deposit_bar/Panel/UNdeposit.disabled = true
+	$button_panel/Roll/radial_light.visible = false
+	$button_panel/Roll/Particls.visible = false
+	$button_panel/Roll/button_dis.visible = true
+	$button_panel/CallUp/button_dis2.visible = true
+	$button_panel/CallDep/button_dis3.visible = true
 	Server.roll_dice()
 
 func button_unlock():
 	$Panel/Players_Bar/Player_hud/P1_swap.disabled = false
-	$Panel/Roll.disabled = false
-	$Panel/callUp.disabled = false
-	$Panel/callDep.disabled = false
+	$button_panel/Roll.disabled = false
+	$button_panel/CallUp.disabled = false
+	$button_panel/CallDep.disabled = false
+	$button_panel/Roll/radial_light.visible = true
+	$button_panel/Roll/Particls.visible = true
+	$button_panel/Roll/button_dis.visible = false
+	$button_panel/CallUp/button_dis2.visible = false
+	$button_panel/CallDep/button_dis3.visible = false
 
 func Player_move(Player,position):
 	if Player == 1:
@@ -137,6 +148,8 @@ func budgetFix(budget,player):
 
 
 func _on_P1_swap_pressed():
+	if Server.PlayerQueue == 1:
+		return
 	$Swap.show()
 	Server.get_swap(1)
 	Server.pSwap = 1
@@ -294,3 +307,15 @@ func ItemReturn(state):
 	else:
 		$Deposit_bar/Panel/UNdeposit.disabled = true
 		$Deposit_bar/Panel/deposit.disabled = false
+
+
+func _on_P2_swap_pressed():
+	if Server.PlayerQueue == 2:
+		return
+	$Swap.show()
+	Server.get_swap(2)
+	Server.pSwap = 2
+
+
+func _on_ok_arested_pressed():
+	$Arrested.hide()

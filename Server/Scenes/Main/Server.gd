@@ -52,7 +52,7 @@ var money = {
 }
 
 var phraseAdd = {
-	0: "is lucky! e found money on the floor.",
+	0: "is lucky! he found money on the floor.",
 	1: "is lucky! he won the lottery.",
 	2: "is lucky! Friends gave him",
 	3: "is lucky! he won at the casino.",

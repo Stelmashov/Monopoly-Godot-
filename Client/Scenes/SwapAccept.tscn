@@ -1,8 +1,25 @@
-[gd_scene format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Resources/Fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_normal.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Deck/accept_panel.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 15
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
 
 [node name="SwapAccept" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 0.445435
+margin_bottom = 0.445435
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -10,28 +27,72 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="."]
 margin_right = 563.0
 margin_bottom = 136.0
-
-[node name="Label" type="Label" parent="Panel"]
-margin_right = 559.0
-margin_bottom = 52.0
-align = 1
-valign = 1
-
-[node name="Accept" type="Button" parent="Panel"]
-margin_left = 59.397
-margin_top = 62.2254
-margin_right = 184.397
-margin_bottom = 115.225
-text = "Accept"
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="B_Cansel" type="Button" parent="Panel"]
-margin_left = 373.352
-margin_top = 65.0538
-margin_right = 498.352
-margin_bottom = 118.054
+[node name="accept_panel" type="Sprite" parent="Panel"]
+position = Vector2( 192.15, 50.1474 )
+scale = Vector2( 8.908, 7.131 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Panel"]
+margin_top = 6.0
+margin_right = 383.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.145098, 0.145098, 0.145098, 1 )
+text = "asdasdasdasdasdasdasdasdasdasd"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Accept" type="TextureButton" parent="Panel"]
+margin_left = 63.2865
+margin_top = 53.4363
+margin_right = 145.286
+margin_bottom = 84.4363
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/Accept"]
+margin_left = 14.3635
+margin_top = 5.4545
+margin_right = 68.3635
+margin_bottom = 22.4545
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.219608, 0.219608, 0.219608, 1 )
+text = "ACCEPT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B_Cansel" type="TextureButton" parent="Panel"]
+margin_left = 232.217
+margin_top = 53.4363
+margin_right = 314.217
+margin_bottom = 84.4363
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/B_Cansel"]
+margin_left = 14.3635
+margin_top = 5.4545
+margin_right = 68.3635
+margin_bottom = 22.4545
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.219608, 0.219608, 0.219608, 1 )
 text = "cansel"
 __meta__ = {
 "_edit_use_anchors_": false

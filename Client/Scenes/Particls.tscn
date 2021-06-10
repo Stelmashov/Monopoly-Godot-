@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Sprites/Deck/Particls.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 0.701961, 0, 0.333333, 1, 0, 0, 0 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 14.6835, 3.37322 )
+amount = 64
+lifetime = 2.0
+randomness = 1.0
+lifetime_randomness = 1.0
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 9.26
+direction = Vector2( 25, 25 )
+spread = 180.0
+gravity = Vector2( -30.005, -10 )
+initial_velocity = 10.75
+initial_velocity_random = 0.13
+scale_amount = 0.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 1 )

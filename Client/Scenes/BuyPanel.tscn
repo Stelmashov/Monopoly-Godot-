@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=1]
-[ext_resource path="res://Resources/Fonts/ARCADE.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/BuyPanel.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Sprites/Deck/accept_panel.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_normal.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_pressed.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="DynamicFont" id=1]
-size = 20
+size = 19
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 1 )
 
 [node name="BuyPanel" type="Control"]
@@ -19,44 +27,71 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="."]
 margin_right = 587.0
 margin_bottom = 100.0
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="accept_panel" type="Sprite" parent="Panel"]
+position = Vector2( 192.026, 50.3315 )
+scale = Vector2( 8.90817, 7.13127 )
+texture = ExtResource( 4 )
+
 [node name="Label" type="Label" parent="Panel"]
-margin_left = 32.1646
-margin_top = -11.4565
-margin_right = 551.165
-margin_bottom = 44.5435
+margin_left = 9.31827
+margin_top = -11.0
+margin_right = 374.318
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.207843, 0.207843, 0.207843, 1 )
 text = "
-Do you want to buy or submit to auction?"
+Do you want to buy?"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Buy" type="Button" parent="Panel"]
-margin_left = 110.875
-margin_top = 51.6916
-margin_right = 187.875
-margin_bottom = 82.6916
-custom_fonts/font = ExtResource( 2 )
-text = "Buy"
+[node name="Buy" type="TextureButton" parent="Panel"]
+margin_left = 61.7354
+margin_top = 52.1945
+margin_right = 143.735
+margin_bottom = 83.1945
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Auction" type="Button" parent="Panel"]
-margin_left = 391.807
-margin_top = 52.4408
-margin_right = 468.807
-margin_bottom = 83.4408
-custom_fonts/font = ExtResource( 2 )
-text = "CANSEL"
+[node name="Label" type="Label" parent="Panel/Buy"]
+margin_left = 27.3642
+margin_top = 5.35144
+margin_right = 67.3642
+margin_bottom = 22.3514
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.133333, 0.133333, 0.133333, 1 )
+text = "buy"
+
+[node name="Auction" type="TextureButton" parent="Panel"]
+margin_left = 238.24
+margin_top = 52.1945
+margin_right = 320.24
+margin_bottom = 83.1945
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="Panel/Auction"]
+margin_left = 17.757
+margin_top = 5.35144
+margin_right = 71.757
+margin_bottom = 22.3514
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.133333, 0.133333, 0.133333, 1 )
+text = "cansel"
 [connection signal="pressed" from="Panel/Buy" to="." method="_on_Buy_pressed"]
 [connection signal="pressed" from="Panel/Auction" to="." method="_on_Auction_pressed"]
