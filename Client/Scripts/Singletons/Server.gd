@@ -22,6 +22,8 @@ signal casion()
 signal rollback()
 signal DepositReturn()
 signal ItemReturn()
+signal set_info()
+signal turn_color()
 
 var network = NetworkedMultiplayerENet.new()#Создание пира
 var port = 10567#Дефолтный порт
@@ -206,3 +208,15 @@ remote func dItemReturn(state):
 
 func CanselClick():
 	rpc_id(1,"CanselClick",PlayerQueue)
+
+func get_info(card):
+	rpc_id(1,"get_info",card,get_tree().get_network_unique_id(),PlayerQueue)
+	
+remote func set_info(name,price,upgrade):
+	emit_signal("set_info",name,price,upgrade)
+
+remote func turn_color(player):
+	emit_signal("turn_color",player)
+
+func cansede():
+	rpc_id(1,"cansede",get_tree().get_network_unique_id(),PlayerQueue)

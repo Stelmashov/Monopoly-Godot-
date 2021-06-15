@@ -1,5 +1,7 @@
 extends Node2D
 
+var turnColor = "f2a92c"
+
 func _ready():
 	Server.connect("players_name",self,"players_name")
 	Server.connect("queue", self, "button_unlock")
@@ -17,6 +19,8 @@ func _ready():
 	Server.connect("rollback",self,"rollback")
 	Server.connect("DepositReturn",self,"DepositReturn")
 	Server.connect("ItemReturn",self,"ItemReturn")
+	Server.connect("set_info",self,"set_info")
+	Server.connect("turn_color",self,"turn_color")
 	
 	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
 	$button_panel/CallUp.disabled = true
@@ -67,15 +71,20 @@ func players_name(players_list):
 
 func _process(delta):
 	if int(Server.timer) == 0:
-		if $Panel/Roll.disabled == true:
-			Server.Skip(2)
-		else:
+		if $button_panel/Roll.disabled == false:
 			Server.Skip(1)
-		$Panel/Roll.disabled = true
-		$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
-		$Panel/callUp.disabled = true
-		$Deposit_bar/Panel/deposit.disabled = true
-		$Deposit_bar/Panel/UNdeposit.disabled = true
+			$button_panel/Roll.disabled = true
+			$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
+			$button_panel/callUp.disabled = true
+			$Deposit_bar/Panel/deposit.disabled = true
+			$Deposit_bar/Panel/UNdeposit.disabled = true
+		#else:
+		#	Server.Skip(1)
+		#$Panel/Roll.disabled = true
+		#$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
+		#$Panel/callUp.disabled = true
+		#$Deposit_bar/Panel/deposit.disabled = true
+		#$Deposit_bar/Panel/UNdeposit.disabled = true
 		#Server.chat(" fell asleep while playing")#Фиксить можно только через новый метод
 	elif int(Server.timer) > 0:
 		Server.timer = Server.timer - delta
@@ -94,6 +103,8 @@ func _on_Roll_pressed():
 	$button_panel/Roll/button_dis.visible = true
 	$button_panel/CallUp/button_dis2.visible = true
 	$button_panel/CallDep/button_dis3.visible = true
+	$button_panel/Cansede.disabled = true
+	$button_panel/Cansede/button_dis4.visible = true
 	Server.roll_dice()
 
 func button_unlock():
@@ -106,6 +117,8 @@ func button_unlock():
 	$button_panel/Roll/button_dis.visible = false
 	$button_panel/CallUp/button_dis2.visible = false
 	$button_panel/CallDep/button_dis3.visible = false
+	$button_panel/Cansede.disabled = false
+	$button_panel/Cansede/button_dis4.visible = false
 
 func Player_move(Player,position):
 	if Player == 1:
@@ -246,6 +259,7 @@ func unlock_P_bar():
 func _on_Spin_pressed():
 	Server.spinPressed()
 	$Casino/Panel/Spin.disabled = true
+	$Casino.hide()
 
 func casion():
 	$Casino.show()
@@ -258,6 +272,7 @@ func rollback(roll1,roll2):
 
 func _on_Cansel_But_pressed():
 	Server.casionCansel()
+	$Casino.hide()
 
 
 func _on_Exit_pressed():
@@ -319,3 +334,124 @@ func _on_P2_swap_pressed():
 
 func _on_ok_arested_pressed():
 	$Arrested.hide()
+
+
+func _on_info2_mouse_entered():
+	Server.get_info(2)
+
+func _on_info4_mouse_entered():
+	Server.get_info(4)
+
+func _on_info5_mouse_entered():
+	Server.get_info(5)
+
+func _on_info6_mouse_entered():
+	Server.get_info(6)
+
+func _on_info8_mouse_entered():
+	Server.get_info(8)
+
+func _on_info9_mouse_entered():
+	Server.get_info(9)
+
+func _on_info11_mouse_entered():
+	Server.get_info(11)
+
+func _on_info12_mouse_entered():
+	Server.get_info(12)
+
+func _on_info13_mouse_entered():
+	Server.get_info(13)
+
+func _on_info14_mouse_entered():
+	Server.get_info(14)
+
+func _on_info15_mouse_entered():
+	Server.get_info(15)
+
+func _on_info17_mouse_entered():
+	Server.get_info(17)
+
+func _on_info18_mouse_entered():
+	Server.get_info(18)
+
+func _on_info20_mouse_entered():
+	Server.get_info(20)
+
+func _on_info22_mouse_entered():
+	Server.get_info(22)
+
+func _on_info23_mouse_entered():
+	Server.get_info(23)
+
+func _on_info24_mouse_entered():
+	Server.get_info(24)
+
+func _on_info25_mouse_entered():
+	Server.get_info(25)
+
+func _on_info26_mouse_entered():
+	Server.get_info(26)
+
+func _on_info27_mouse_entered():
+	Server.get_info(27)
+
+func _on_info29_mouse_entered():
+	Server.get_info(29)
+
+func _on_info30_mouse_entered():
+	Server.get_info(30)
+
+func _on_info32_mouse_entered():
+	Server.get_info(32)
+
+func _on_info33_mouse_entered():
+	Server.get_info(33)
+
+func _on_info34_mouse_entered():
+	Server.get_info(34)
+
+func _on_info36_mouse_entered():
+	Server.get_info(36)
+
+func set_info(name,price,upgrade):
+	$Card_panel/Coust.text = "Coust: " + str(price)
+	$Card_panel/Upgrade.text = "Upgrade: " + str(price + upgrade)
+	$Card_panel/Name.text = name
+	$Card_panel.visible = true
+	$Card_panel.set_global_position(get_global_mouse_position())
+
+func _on_info_mouse_exited():
+	$Card_panel.visible = false
+
+func turn_color(player):
+	$Panel/Players_Bar/Player_hud.modulate = "e5e5e5"
+	$Panel/Players_Bar/Player_hud2.modulate = "e5e5e5"
+	$Panel/Players_Bar/Player_hud3.modulate = "e5e5e5"
+	$Panel/Players_Bar/Player_hud4.modulate = "e5e5e5"
+	if player == 1:
+		$Panel/Players_Bar/Player_hud.modulate = turnColor
+	if player == 2:
+		$Panel/Players_Bar/Player_hud2.modulate = turnColor
+	if player == 3:
+		$Panel/Players_Bar/Player_hud3.modulate = turnColor
+	if player == 4:
+		$Panel/Players_Bar/Player_hud4.modulate = turnColor
+
+
+func _on_Cansede_pressed():
+	$button_panel/Roll.disabled = true
+	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
+	$button_panel/CallDep.disabled = true
+	$button_panel/CallUp.disabled = true
+	$button_panel/Cansede.disabled = true
+	$Deposit_bar/Panel/deposit.disabled = true
+	$Deposit_bar/Panel/UNdeposit.disabled = true
+	$button_panel/Roll/radial_light.visible = false
+	$button_panel/Roll/Particls.visible = false
+	$button_panel/Roll/button_dis.visible = true
+	$button_panel/CallUp/button_dis2.visible = true
+	$button_panel/CallDep/button_dis3.visible = true
+	$button_panel/Cansede.disabled = true
+	$button_panel/Cansede/button_dis4.visible = true
+	Server.cansede()
