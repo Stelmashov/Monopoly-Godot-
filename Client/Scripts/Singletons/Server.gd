@@ -24,6 +24,9 @@ signal DepositReturn()
 signal ItemReturn()
 signal set_info()
 signal turn_color()
+signal endgame()
+signal policmen()
+signal bankrapt()
 
 var network = NetworkedMultiplayerENet.new()#Создание пира
 var port = 10567#Дефолтный порт
@@ -164,8 +167,8 @@ remote func priceSet(name,price):
 func upgradePressed():
 	rpc_id(1,"upgradePressed",get_tree().get_network_unique_id(),PlayerQueue,UPP)
 
-remote func cellUpdated(card):
-	emit_signal("cellUpdated",card)
+remote func cellUpdated(card,state):
+	emit_signal("cellUpdated",card,state)
 
 remote func unlock_P_bar():
 	emit_signal("unlock_P_bar")
@@ -220,3 +223,12 @@ remote func turn_color(player):
 
 func cansede():
 	rpc_id(1,"cansede",get_tree().get_network_unique_id(),PlayerQueue)
+
+remote func endgame(string):
+	emit_signal("endgame",string)
+
+remote func policmen():
+	emit_signal("policmen")
+
+remote func bankrapt():
+	emit_signal("bankrapt")

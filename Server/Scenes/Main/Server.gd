@@ -152,6 +152,41 @@ var cellPrice = {
 	36: 1000,
 }
 
+var cellUpdate = {
+	2: 0,
+	3: 0,
+	4: 0,
+	5: 0,
+	6: 0,
+	7: 0,
+	8: 0,
+	9: 0,
+	11: 0,
+	12: 0,
+	13: 0,
+	14: 0,
+	15: 0,
+	16: 0,
+	17: 0,
+	18: 0,
+	20: 0,
+	21: 0,
+	22: 0,
+	23: 0,
+	24: 0,
+	25: 0,
+	26: 0,
+	27: 0,
+	29: 0,
+	30: 0,
+	31: 0,
+	32: 0,
+	33: 0,
+	34: 0,
+	35: 0,
+	36: 0,
+}
+
 var cellOwner = {
 	1: -1,
 	2: 0,
@@ -413,7 +448,7 @@ remote func roll_dice(player_id,player,casino):#Функция для рандо
 
 remote func queue_button_unlock(skip):#Функция для по очередного хода всех игроков
 	if skip == 1:
-		rpc_id(0," fell asleep while playing.",players[players_queue[queue]],colors[players_queue[queue]])
+		rpc_id(0,"message"," fell asleep while playing.",players[players_queue[queue]],colors[players_queue[queue]])
 		queue += 1
 		rpc_id(0,"Timer",time)
 	if skip == 2:
@@ -432,21 +467,25 @@ remote func queue_button_unlock(skip):#Функция для по очередн
 	print("Очередь игрока " + str(queue))
 	if queue == 1:
 		if player1_info["state"] == "Prisoner":
+			rpc_id(0,"turn_color",queue)
 			rpc_id(players_queue[queue],"unlock_P_bar")
 			rpc_id(0,"Timer",time)
 			return
 	elif queue == 2:
 		if player2_info["state"] == "Prisoner":
+			rpc_id(0,"turn_color",queue)
 			rpc_id(players_queue[queue],"unlock_P_bar")
 			rpc_id(0,"Timer",time)
 			return
 	elif queue == 3:
 		if player3_info["state"] == "Prisoner":
+			rpc_id(0,"turn_color",queue)
 			rpc_id(players_queue[queue],"unlock_P_bar")
 			rpc_id(0,"Timer",time)
 			return
 	elif queue == 4:
 		if player4_info["state"] == "Prisoner":
+			rpc_id(0,"turn_color",queue)
 			rpc_id(players_queue[queue],"unlock_P_bar")
 			rpc_id(0,"Timer",time)
 			return
@@ -473,6 +512,7 @@ func Player_move():
 			queue += 1
 			player1_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[1]],colors[players_queue[1]])
+			rpc_id(players_queue[1],"policmen")
 			queue_button_unlock(0)
 			return
 		elif player1_info["curentCell"] == 19:
@@ -483,6 +523,7 @@ func Player_move():
 			player1_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[1]],colors[players_queue[1]])
 			rpc_id(0,"Player_move",1,cellPosition[10])
+			rpc_id(players_queue[1],"policmen")
 			player1_info["curentCell"] = 10
 			queue_button_unlock(0)
 			return
@@ -524,8 +565,13 @@ func Player_move():
 				queue_button_unlock(0)
 				return
 			else:
+				if player1_info["budget"] - cellPrice[player1_info["curentCell"]] < 0:
+					rpc_id(players_queue[1],"bankrapt")
+					cansede(0,1)
+					return
 				player1_info["budget"] = player1_info["budget"] - cellPrice[player1_info["curentCell"]]
 				rpc_id(0,"budgetFix",player1_info["budget"],1)
+				rent(cellOwner[player1_info["curentCell"]],player1_info["curentCell"])
 				var text = str(players[players_queue[1]])+" paid " + str(players[players_queue[cellOwner[player1_info["curentCell"]]]]) + " for the rent "+str(cellPrice[player1_info["curentCell"]])+"$"#Поменять цену клетки на его оренду позже
 				rpc_id(0,"message",text,players[players_queue[1]],1)
 				queue += 1
@@ -549,6 +595,7 @@ func Player_move():
 			queue += 1
 			player2_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[2]],colors[players_queue[2]])
+			rpc_id(players_queue[2],"policmen")
 			queue_button_unlock(0)
 			return
 		elif player2_info["curentCell"] == 19:
@@ -559,6 +606,7 @@ func Player_move():
 			player2_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[2]],colors[players_queue[2]])
 			rpc_id(0,"Player_move",2,cellPosition[10])
+			rpc_id(players_queue[2],"policmen")
 			player2_info["curentCell"] = 10
 			queue_button_unlock(0)
 			return
@@ -600,8 +648,13 @@ func Player_move():
 				queue_button_unlock(0)
 				return
 			else:
+				if player2_info["budget"] - cellPrice[player2_info["curentCell"]] < 0:
+					rpc_id(players_queue[2],"bankrapt")
+					cansede(0,2)
+					return
 				player2_info["budget"] = player2_info["budget"] - cellPrice[player2_info["curentCell"]]
 				rpc_id(0,"budgetFix",player2_info["budget"],2)
+				rent(cellOwner[player2_info["curentCell"]],player2_info["curentCell"])
 				var text = str(players[players_queue[2]])+" paid " + str(players[players_queue[cellOwner[player2_info["curentCell"]]]]) + " for the rent "+str(cellPrice[player2_info["curentCell"]])+"$"#Поменять цену клетки на его оренду позже
 				rpc_id(0,"message",text,players[players_queue[2]],2)
 				queue += 1
@@ -624,6 +677,7 @@ func Player_move():
 			queue += 1
 			player3_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[3]],colors[players_queue[3]])
+			rpc_id(players_queue[3],"policmen")
 			queue_button_unlock(0)
 			return
 		elif player3_info["curentCell"] == 19:
@@ -634,6 +688,7 @@ func Player_move():
 			player3_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[3]],colors[players_queue[3]])
 			rpc_id(0,"Player_move",3,cellPosition[10])
+			rpc_id(players_queue[3],"policmen")
 			player3_info["curentCell"] = 10
 			queue_button_unlock(0)
 			return
@@ -675,8 +730,13 @@ func Player_move():
 				queue_button_unlock(0)
 				return
 			else:
+				if player3_info["budget"] - cellPrice[player3_info["curentCell"]] < 0:
+					rpc_id(players_queue[3],"bankrapt")
+					cansede(0,3)
+					return
 				player3_info["budget"] = player3_info["budget"] - cellPrice[player3_info["curentCell"]]
 				rpc_id(0,"budgetFix",player3_info["budget"],3)
+				rent(cellOwner[player3_info["curentCell"]],player3_info["curentCell"])
 				var text = str(players[players_queue[3]])+" paid " + str(players[players_queue[cellOwner[player3_info["curentCell"]]]]) + " for the rent "+str(cellPrice[player3_info["curentCell"]])+"$"#Поменять цену клетки на его оренду позже
 				rpc_id(0,"message",text,players[players_queue[3]],3)
 				queue += 1
@@ -699,6 +759,7 @@ func Player_move():
 			queue += 1
 			player4_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[4]],colors[players_queue[4]])
+			rpc_id(players_queue[4],"policmen")
 			queue_button_unlock(0)
 			return
 		elif player4_info["curentCell"] == 19:
@@ -709,6 +770,7 @@ func Player_move():
 			player4_info["state"] = "Prisoner"
 			rpc_id(0,"message","went to jail.",players[players_queue[4]],colors[players_queue[4]])
 			rpc_id(0,"Player_move",4,cellPosition[10])
+			rpc_id(players_queue[4],"policmen")
 			player4_info["curentCell"] = 10
 			queue_button_unlock(0)
 			return
@@ -750,8 +812,13 @@ func Player_move():
 				queue_button_unlock(0)
 				return
 			else:
+				if player4_info["budget"] - cellPrice[player4_info["curentCell"]] < 0:
+					rpc_id(players_queue[4],"bankrapt")
+					cansede(0,4)
+					return
 				player4_info["budget"] = player4_info["budget"] - cellPrice[player4_info["curentCell"]]
 				rpc_id(0,"budgetFix",player4_info["budget"],4)
+				rent(cellOwner[player4_info["curentCell"]],player4_info["curentCell"])
 				var text = str(players[players_queue[4]])+" paid " + str(players[players_queue[cellOwner[player4_info["curentCell"]]]]) + " for the rent "+str(cellPrice[player4_info["curentCell"]])+"$"#Поменять цену клетки на его оренду позже
 				rpc_id(0,"message",text,players[players_queue[4]],4)
 				queue += 1
@@ -837,6 +904,8 @@ remote func swapSubmit(FP,SP,pSwap,pSubmit,money):
 	deal[2] = FP
 	deal[3] = SP
 	deal[5] = money
+	if checkMoney(pSwap,money) == 1:
+		return
 	if SP != -1:
 		rpc_id(players_queue[pSwap],"swapCatch",players[players_queue[pSubmit]],cellNames[pSwapArr[FP]],cellNames[pSubmitArr[SP]],money)
 	else:
@@ -1056,18 +1125,26 @@ remote func upgradePressed(requster,player,i):
 	cellP = cellPrice[card] + ((cellPrice[card] * 40)/100)
 	cellPrice[card] = cellP
 	if player == 1:
+		if player1_info["budget"] - cellP < 0:
+			return
 		player1_info["budget"] -= cellP
 		rpc_id(0,"budgetFix",player1_info["budget"],player)
 	elif player == 2:
+		if player2_info["budget"] - cellP < 0:
+			return
 		player2_info["budget"] -= cellP
 		rpc_id(0,"budgetFix",player2_info["budget"],player)
 	elif player == 3:
+		if player3_info["budget"] - cellP < 0:
+			return
 		player3_info["budget"] -= cellP
 		rpc_id(0,"budgetFix",player3_info["budget"],player)
 	elif player == 4:
+		if player4_info["budget"] - cellP < 0:
+			return
 		player4_info["budget"] -= cellP
 		rpc_id(0,"budgetFix",player4_info["budget"],player)
-	rpc_id(0,"cellUpdated",card)
+	rpc_id(0,"cellUpdated",card,1)
 
 func Chance(player):
 	var rng = RandomNumberGenerator.new()
@@ -1079,18 +1156,38 @@ func Chance(player):
 	if Operation == 0:
 		text = phraseSub[Phrase] + " - " + str(money[moneys]) + "$."
 		if player == 1:
+			if player1_info["budget"] - money[moneys] < 0:
+				rpc_id(players_queue[1],"bankrapt")
+				cansede(0,1)
+				clearCards(1)
+				return
 			player1_info["budget"] -= money[moneys]
 			rpc_id(0,"budgetFix",player1_info["budget"],player)
 			rpc_id(0,"message",text,players[players_queue[player]],colors[players_queue[player]])
 		if player == 2:
+			if player2_info["budget"] - money[moneys] < 0:
+				rpc_id(players_queue[2],"bankrapt")
+				cansede(0,2)
+				clearCards(2)
+				return
 			player2_info["budget"] -= money[moneys]
 			rpc_id(0,"budgetFix",player2_info["budget"],player)
 			rpc_id(0,"message",text,players[players_queue[player]],colors[players_queue[player]])
 		if player == 3:
+			if player3_info["budget"] - money[moneys] < 0:
+				rpc_id(players_queue[3],"bankrapt")
+				cansede(0,3)
+				clearCards(3)
+				return
 			player3_info["budget"] -= money[moneys]
 			rpc_id(0,"budgetFix",player3_info["budget"],player)
 			rpc_id(0,"message",text,players[players_queue[player]],colors[players_queue[player]])
 		if player == 4:
+			if player4_info["budget"] - money[moneys] < 0:
+				rpc_id(players_queue[4],"bankrapt")
+				cansede(0,4)
+				clearCards(4)
+				return
 			player4_info["budget"] -= money[moneys]
 			rpc_id(0,"budgetFix",player4_info["budget"],player)
 			rpc_id(0,"message",text,players[players_queue[player]],colors[players_queue[player]])
@@ -1115,6 +1212,8 @@ func Chance(player):
 
 remote func buyOffPressed(requster,player):
 	if player == 1:
+		if player1_info["budget"] - 1000 < 0:
+			return
 		player1_info["budget"] -= 1000
 		rpc_id(0,"budgetFix",player1_info["budget"],player)
 		queue += 1
@@ -1122,6 +1221,8 @@ remote func buyOffPressed(requster,player):
 		queue_button_unlock(0)
 		return
 	if player == 2:
+		if player2_info["budget"] - 1000 < 0:
+			return
 		player2_info["budget"] -= 1000
 		rpc_id(0,"budgetFix",player2_info["budget"],player)
 		queue += 1
@@ -1129,6 +1230,8 @@ remote func buyOffPressed(requster,player):
 		queue_button_unlock(0)
 		return
 	if player == 3:
+		if player3_info["budget"] - 1000 < 0:
+			return
 		player3_info["budget"] -= 1000
 		rpc_id(0,"budgetFix",player3_info["budget"],player)
 		queue += 1
@@ -1136,6 +1239,8 @@ remote func buyOffPressed(requster,player):
 		queue_button_unlock(0)
 		return
 	if player == 4:
+		if player4_info["budget"] - 1000 < 0:
+			return
 		player4_info["budget"] -= 1000
 		rpc_id(0,"budgetFix",player4_info["budget"],player)
 		queue += 1
@@ -1193,15 +1298,23 @@ remote func UnDeposit(DP,requster,player):
 	cellOwner[UpgradeArrNum[DP]] -= 10
 	rpc_id(0,"colorChange", player,UpgradeArrNum[DP])
 	if player == 1:
+		if player1_info["budget"] - cellPrice[UpgradeArrNum[DP]] < 0:
+			return
 		player1_info["budget"] -= cellPrice[UpgradeArrNum[DP]]
 		rpc_id(0,"budgetFix",player1_info["budget"],player)
 	if player == 2:
+		if player2_info["budget"] - cellPrice[UpgradeArrNum[DP]] < 0:
+			return
 		player2_info["budget"] -= cellPrice[UpgradeArrNum[DP]]
 		rpc_id(0,"budgetFix",player2_info["budget"],player)
 	if player == 3:
+		if player3_info["budget"] - cellPrice[UpgradeArrNum[DP]] < 0:
+			return
 		player3_info["budget"] -= cellPrice[UpgradeArrNum[DP]]
 		rpc_id(0,"budgetFix",player3_info["budget"],player)
 	if player == 4:
+		if player4_info["budget"] - cellPrice[UpgradeArrNum[DP]] < 0:
+			return
 		player4_info["budget"] -= cellPrice[UpgradeArrNum[DP]]
 		rpc_id(0,"budgetFix",player4_info["budget"],player)
 	pass
@@ -1231,14 +1344,70 @@ remote func get_info(card,requster,player):
 remote func cansede(requster,player):
 	queue_button_unlock(2)
 	
+	#print(player)
 	players_queue[player] = 0
-	
-#	players_queue.erase(player)
-#	var temp = players_queue.duplicate()
-#	players_queue.clear()
-	
-#	var arr = temp.keys()
-	
-#	for i in arr.size():
-#		players_queue[i+1] = temp[arr[i]]
+	clearCards(player)
 
+	var check = 0
+	print(players_queue)
+	for j in players_queue.size():
+		if players_queue[j+1] == 0:
+			check =+ 1
+	print(check)
+	if players_queue.size() - check == 1:
+		endgame()
+		return
+	check = 0
+
+func endgame():
+	var player = ""
+	for j in players_queue.size():
+		if players_queue[j+1] != 0:
+			player = players_queue[j+1]
+	for i in players_queue.size():
+		players_queue[i] = 0
+	var pharse = "Player " + str(players[player]) + " win!"
+	rpc_id(0,"endgame",pharse)
+
+func rent(player,cell):
+	if player == 1:
+		player1_info["budget"] =+ cellPrice[cell]
+		rpc_id(0,"budgetFix",player1_info["budget"],1)
+	if player == 2:
+		player2_info["budget"] =+ cellPrice[cell]
+		rpc_id(0,"budgetFix",player2_info["budget"],2)
+	if player == 3:
+		player3_info["budget"] =+ cellPrice[cell]
+		rpc_id(0,"budgetFix",player3_info["budget"],3)
+	if player == 4:
+		player4_info["budget"] =+ cellPrice[cell]
+		rpc_id(0,"budgetFix",player4_info["budget"],4)
+
+func clearCards(player):
+	for i in cellOwner.size():
+		if cellOwner[i+1] == player:
+			cellOwner[i+1] = 0
+			rpc_id(0,"cellUpdated",i+1,0)
+			rpc_id(0,"colorChange", -1,i+1)
+		if i != 0:
+			if i != 9:
+				if  i != 18:
+					if i != 27:
+						if cellUpdate[i+1] != 0:
+							cellUpdate[i+1] = 0
+							cellPrice[i+1] = ((cellPrice[i+1] * 100) / 140)
+	pass
+
+func checkMoney(player,money):
+	if player == 1:
+		if player1_info["budget"] - money < 0:
+			return 1
+	if player == 2:
+		if player2_info["budget"] - money < 0:
+			return 1
+	if player == 3:
+		if player3_info["budget"] - money < 0:
+			return 1
+	if player == 4:
+		if player4_info["budget"] - money < 0:
+			return 1

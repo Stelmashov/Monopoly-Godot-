@@ -1,6 +1,7 @@
 extends Node2D
 
 var turnColor = "f2a92c"
+var defaultCard = "ffffff"
 
 func _ready():
 	Server.connect("players_name",self,"players_name")
@@ -21,6 +22,9 @@ func _ready():
 	Server.connect("ItemReturn",self,"ItemReturn")
 	Server.connect("set_info",self,"set_info")
 	Server.connect("turn_color",self,"turn_color")
+	Server.connect("endgame", self, "endgame")
+	Server.connect("policmen", self, "policmen")
+	Server.connect("bankrapt", self , "bankrapt")
 	
 	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
 	$button_panel/CallUp.disabled = true
@@ -75,9 +79,17 @@ func _process(delta):
 			Server.Skip(1)
 			$button_panel/Roll.disabled = true
 			$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
-			$button_panel/callUp.disabled = true
+			$button_panel/CallDep.disabled = true
+			$button_panel/CallUp.disabled = true
 			$Deposit_bar/Panel/deposit.disabled = true
 			$Deposit_bar/Panel/UNdeposit.disabled = true
+			$button_panel/Roll/radial_light.visible = false
+			$button_panel/Roll/Particls.visible = false
+			$button_panel/Roll/button_dis.visible = true
+			$button_panel/CallUp/button_dis2.visible = true
+			$button_panel/CallDep/button_dis3.visible = true
+			$button_panel/Cansede.disabled = true
+			$button_panel/Cansede/button_dis4.visible = true
 		#else:
 		#	Server.Skip(1)
 		#$Panel/Roll.disabled = true
@@ -151,6 +163,8 @@ func cellColorChange(player,cell):
 		get_node(string).modulate = Color.yellow
 	elif player == 5:
 		get_node(string).modulate = Color.black
+	elif player == -1:
+		get_node(string).modulate = Color.white
 
 func budgetFix(budget,player):
 	#print(budget)
@@ -240,9 +254,12 @@ func priceSet(lable):
 func _on_Upgrade_pressed():
 	Server.upgradePressed()
 
-func cellUpdated(card):
+func cellUpdated(card,state):
 	var string = NodePath("Panel/Deck/c" + str(card) + "/Upgrade_ico")
-	get_node(string).show()
+	if state == 1:
+		get_node(string).show()
+	elif state == 0:
+		get_node(string).hide()
 
 func _on_doublet_pressed():
 	Server.doubletPressed()
@@ -455,3 +472,62 @@ func _on_Cansede_pressed():
 	$button_panel/Cansede.disabled = true
 	$button_panel/Cansede/button_dis4.visible = true
 	Server.cansede()
+
+func endgame(string):
+	Server.timer = -1
+	$Win_panel/Panel/Label.text = string
+	$Win_panel.visible = true
+	$button_panel/Roll.disabled = true
+	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
+	$button_panel/CallDep.disabled = true
+	$button_panel/CallUp.disabled = true
+	$button_panel/Cansede.disabled = true
+	$Deposit_bar/Panel/deposit.disabled = true
+	$Deposit_bar/Panel/UNdeposit.disabled = true
+	$button_panel/Roll/radial_light.visible = false
+	$button_panel/Roll/Particls.visible = false
+	$button_panel/Roll/button_dis.visible = true
+	$button_panel/CallUp/button_dis2.visible = true
+	$button_panel/CallDep/button_dis3.visible = true
+	$button_panel/Cansede.disabled = true
+	$button_panel/Cansede/button_dis4.visible = true
+
+
+func _on_P3_swap_pressed():
+	if Server.PlayerQueue == 3:
+		return
+	$Swap.show()
+	Server.get_swap(3)
+	Server.pSwap = 3
+
+
+func _on_P4_swap_pressed():
+	if Server.PlayerQueue == 4:
+		return
+	$Swap.show()
+	Server.get_swap(4)
+	Server.pSwap = 4
+
+func policmen():
+	$Arrested.show()
+
+
+func _on_ok_pressed():
+	$bankrot.hide()
+
+func bankrapt():
+	$bankrot.show()
+	$button_panel/Roll.disabled = true
+	$Panel/Players_Bar/Player_hud/P1_swap.disabled = true
+	$button_panel/CallDep.disabled = true
+	$button_panel/CallUp.disabled = true
+	$button_panel/Cansede.disabled = true
+	$Deposit_bar/Panel/deposit.disabled = true
+	$Deposit_bar/Panel/UNdeposit.disabled = true
+	$button_panel/Roll/radial_light.visible = false
+	$button_panel/Roll/Particls.visible = false
+	$button_panel/Roll/button_dis.visible = true
+	$button_panel/CallUp/button_dis2.visible = true
+	$button_panel/CallDep/button_dis3.visible = true
+	$button_panel/Cansede.disabled = true
+	$button_panel/Cansede/button_dis4.visible = true

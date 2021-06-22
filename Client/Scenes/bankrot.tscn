@@ -1,0 +1,127 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assets/Sprites/Deck/Icnos/burn_anim.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/Deck/Icnos/asfasfasf1.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/UI/Buttons/arest_buttons_normal.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.717647, 0.717647, 0.717647, 1 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.324503, 0.655629, 1 )
+colors = PoolColorArray( 0.984375, 0.824949, 0.280701, 1, 1, 0.235294, 0, 1, 1, 0.235294, 0, 1, 1, 0.235294, 0, 0.27451 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 36, 33 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 36, 0, 36, 33 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 72, 0, 36, 33 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 108, 0, 36, 33 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="DynamicFont" id=8]
+size = 14
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 14
+font_data = ExtResource( 3 )
+
+[node name="bankrot" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.00131094
+anchor_bottom = 0.00131094
+margin_left = -116.097
+margin_top = -104.77
+margin_right = 113.903
+margin_bottom = 136.23
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Panel"]
+position = Vector2( 108.685, 148.287 )
+amount = 70
+lifetime = 1.65
+speed_scale = 0.31
+randomness = 0.99
+emission_shape = 2
+emission_rect_extents = Vector2( 100, 1 )
+gravity = Vector2( 0, -98 )
+initial_velocity = 25.0
+initial_velocity_random = 1.0
+radial_accel_random = 1.0
+scale_amount = 4.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 2 )
+
+[node name="asfasfasf1" type="Sprite" parent="Panel"]
+position = Vector2( 116.097, 103.826 )
+scale = Vector2( 4.03, 4.03 )
+texture = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Panel"]
+position = Vector2( 115.306, 81.1598 )
+scale = Vector2( 3.60027, 3.60027 )
+frames = SubResource( 7 )
+frame = 2
+playing = true
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 51.6333
+margin_top = 165.563
+margin_right = 177.633
+margin_bottom = 180.563
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+text = "You are bankrupt!"
+
+[node name="ok" type="TextureButton" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -39.0
+margin_top = 73.5
+margin_right = 39.0
+margin_bottom = 102.5
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/ok"]
+margin_left = 31.183
+margin_top = 5.35466
+margin_right = 48.183
+margin_bottom = 20.3547
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+text = "ok"

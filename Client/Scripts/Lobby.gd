@@ -20,9 +20,14 @@ func _on_Join_pressed():#Функция, срабатывает при нажа�
 		$Connect/ErrorLabel.text = "Invalid name!"
 		return
 
+	if $Connect/Ip.text == "":
+		$Connect/ErrorLabel.text = "Invalid IP!"
+		return
+
 	$Connect/ErrorLabel.text = ""
 	$Connect/Join.disabled = true
 		
+	Server.ip = $Connect/Ip.text
 	Server.ConnectToServer($Connect/Name.text)#Попытка присоедениться к серверу
 	
 	$Connect.hide()
